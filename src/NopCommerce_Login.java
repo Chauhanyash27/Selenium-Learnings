@@ -4,14 +4,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-public class NopCommerce_Login {
-    public static void main(String[] args) {
+public class NopCommerce_Login extends BaseClass{
 
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+    public void userLogin() throws InterruptedException {
 
-        driver.get("https://demo.nopcommerce.com/");
+        browserInitator();
 
         driver.findElement(By.xpath("//a[@class='ico-login']")).click();
 
@@ -20,5 +17,39 @@ public class NopCommerce_Login {
         driver.findElement(By.xpath("//input[@class='password']")).sendKeys("123456");
 
         driver.findElement(By.xpath("//button[@class='button-1 login-button']")).click();
+
+         Thread.sleep(3000);
+
+        driver.close();
+
+    }
+
+    public void forgotPassword() throws InterruptedException {
+
+        browserInitator();
+
+        driver.findElement(By.xpath("//a[@class='ico-login']")).click();
+
+        driver.findElement(By.xpath("//span[@class='forgot-password']//a")).click();
+
+        driver.findElement(By.xpath("//input[@class='email']")).sendKeys("yash@mailinator.com");
+
+        driver.findElement(By.xpath("//button[@class='button-1 password-recovery-button']")).click();
+
+        if (driver.findElement(By.xpath("//div[@class='bar-notification success']")).isDisplayed())
+            System.out.println("Login Successful");
+        else {
+            System.out.println("Login unsuccessful");
+        }
+
+        Thread.sleep(3000);
+        driver.close();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+
+        NopCommerce_Login obj_login = new NopCommerce_Login();
+        obj_login.userLogin();
+        obj_login.forgotPassword();
     }
 }

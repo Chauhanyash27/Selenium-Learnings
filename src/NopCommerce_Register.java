@@ -1,20 +1,11 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-import java.time.Duration;
+public class NopCommerce_Register extends BaseClass {
 
-public class NopCommerce_Register {
-    public static void main(String[] args) {
-
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-
-        driver.get("https://demo.nopcommerce.com/");
-
+    public void UserRegister(){
+        browserInitator();
+        driver.findElement(By.xpath("//a[@class=\"ico-register\"]")).click();
         driver.findElement(By.xpath("//a[@class=\"ico-register\"]")).click();
 
         driver.findElement(By.xpath("//*[@id='gender-male']")).click();
@@ -42,7 +33,13 @@ public class NopCommerce_Register {
 
         driver.findElement(By.xpath("//button[@id='register-button']")).click();
 
+        driver.close();
+    }
 
+    public static void main(String[] args) {
+
+        NopCommerce_Register obj = new NopCommerce_Register();
+        obj.UserRegister();
     }
 }
 
