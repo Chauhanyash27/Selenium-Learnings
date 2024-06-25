@@ -18,12 +18,7 @@ public class NopCommerce_Login extends BaseClass{
 
         driver.findElement(By.xpath("//button[@class='button-1 login-button']")).click();
 
-         Thread.sleep(3000);
-
-        driver.close();
-
     }
-
     public void forgotPassword() throws InterruptedException {
 
         browserInitator();
