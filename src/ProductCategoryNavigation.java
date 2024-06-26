@@ -1,70 +1,87 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
 public class ProductCategoryNavigation extends NopCommerce_Login{
+    public void CategoryNavigation() throws InterruptedException {
 
-    public void computerCategory() throws InterruptedException {
-//
-//        for(int i=1;i<=16;i++){
-//
-//            if(i==2 || i==3 || i==4 || i==) continue;
-//            else{
-//            Thread.sleep(3000);
-//            driver.findElement(By.xpath("//ul[@class=\"top-menu notmobile\"]//li["+i+"]//a")).click();}
-//
-//        }
+        int categoriesCount = driver.findElements(By.xpath("//ul[@class=\"top-menu notmobile\"]/li")).size();
 
-        driver.findElement(By.xpath("/html/body/div[6]/div[2]/ul[1]/li[1]/a")).click();
-        List<WebElement> subcategories=driver.findElements(By.xpath("//div[@class=\"item-grid\"]/div"));
-
-        System.out.println((subcategories.size()==3) ? "All computer subcategories are displayed" : "All subcategories Not displayed");
-
-        //Desktops
-        driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[3]/div/div[2]/div[1]/div/div[1]")).click();
-        itemsDisplayVerification();
-
-        Select sortOrder = new Select(driver.findElement(By.xpath("//*[@id=\"products-orderby\"]")));
-        sortOrder.selectByIndex(2);
-
-        String productLenovo= driver.findElement(By.xpath("//div[@data-productid=\"3\"]/div[2]//a")).getText();
-        System.out.println(productLenovo);
-        System.out.println((productLenovo.contains("Lenovo")) ? "Order sorted by Name: Z to A":"Order not sorted correctly");
-
-        // Notebooks
-        driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[1]/div[2]/ul/li[1]/ul/li[2]/a")).click();
-        itemsDisplayVerification();
-    }
-
-    public void itemsDisplayVerification(){
-        List<WebElement> subcategoryItems = driver.findElements(By.xpath("//div[@class=\"item-grid\"]/child::div"));
-
-        int numberOfItems = subcategoryItems.size();
-
-        switch(numberOfItems){
-            case 3:
-                System.out.println("All desktops items are displayed"); break;
-            case 6:
-                System.out.println("All notebooks items are displayed"); break;
-            default:
-                System.out.println("All items not displayed");
+        for(int i=1;i<=categoriesCount;i++) {
+            Thread.sleep(3000);
+            driver.findElement(By.xpath("//ul[@class=\"top-menu notmobile\"]/li["+i+"]/a")).click();
+            List<WebElement> subcategories=driver.findElements(By.xpath("//div[@class=\"item-grid\"]//div[@class=\"item-box\"]"));
+            if ((i == 1 || i ==2 || i== 3) && subcategories.size()==3){
+                System.out.println("All subcategories are displayed");
+            }
+            else if (subcategories.size()==3){
+                switch (i){
+                    case 4:
+                        System.out.println("All digital downloads items are displayed ");break;
+                    case 5:
+                        System.out.println("All books items are displayed");break;
+                    case 6:
+                        System.out.println("All jewelry items are displayed");break;
+                    case 7:
+                        System.out.println("All Gift card items are displayed");break;
+                }
+            }
+            else {System.out.println("All subcategories/items are not displayed");}
+            subcategories.clear();
         }
+}
 
+    public void subcategoryNavigation() throws InterruptedException {
 
+        Actions action= new Actions(driver);
 
+        for(int i=1;i<=3;i++){
+            int subcategoryCount = driver.findElements(By.xpath("//ul[@class=\"top-menu notmobile\"]/li["+i+"]/ul/li/a")).size();
+            for(int j=1;j<=subcategoryCount;j++){
+                Thread.sleep(3000);
+                WebElement categoryHover = driver.findElement(By.xpath("//ul[@class=\"top-menu notmobile\"]/li["+i+"]"));
+                action.moveToElement(categoryHover).perform();
+                driver.findElement(By.xpath("//ul[@class=\"top-menu notmobile\"]/li["+i+"]/ul/li["+j+"]/a")).click();
+                itemsDisplayVerification(i);
+            }
+        }
     }
 
-
-
-
-
+    public void itemsDisplayVerification(int i){
+        List<WebElement> subcategoryItems = driver.findElements(By.xpath("//div[@class=\"item-grid\"]/child::div"));
+        int numberOfItems = subcategoryItems.size();
+        if(i==1){
+            switch(numberOfItems){
+                case 3:
+                    System.out.println("All desktops/Software items are displayed"); break;
+                case 6:
+                    System.out.println("All notebooks items are displayed"); break;
+                default:
+                    System.out.println("All items not displayed");
+                }
+        }
+        if(i==2){
+            if(numberOfItems==3) System.out.println("All items are displayed");
+            else System.out.println("All items not displayed");
+            }
+        if(i==3){
+            switch(numberOfItems){
+                case 3:
+                    System.out.println("All Shoes/Accessories  items are displayed"); break;
+                case 4:
+                    System.out.println("All Clothing items are displayed"); break;
+                default:
+                    System.out.println("All items not displayed");
+            }
+        }
+    }
 
     public static void main(String[] args) throws InterruptedException {
 
         ProductCategoryNavigation obj1 = new ProductCategoryNavigation();
-        obj1.browserInitator();
-        obj1.computerCategory();
+        browserInitiator();
+        obj1.subcategoryNavigation();
     }
 }

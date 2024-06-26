@@ -4,7 +4,7 @@ import org.openqa.selenium.support.ui.Select;
 public class NopCommerce_Register extends BaseClass {
 
     public void UserRegister(){
-        browserInitator();
+        browserInitiator();
         driver.findElement(By.xpath("//a[@class=\"ico-register\"]")).click();
         driver.findElement(By.xpath("//a[@class=\"ico-register\"]")).click();
 
