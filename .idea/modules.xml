@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Data Driven Framework.iml" filepath="$PROJECT_DIR$/Data Driven Framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Test Data/Test Data.iml" filepath="$PROJECT_DIR$/Test Data/Test Data.iml" />
     </modules>
   </component>
 </project>
